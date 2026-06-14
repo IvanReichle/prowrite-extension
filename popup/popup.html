@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProWrite AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 340px;
+      min-height: 200px;
+      background: #0f0e2a;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      padding: 14px 16px 10px;
+    }
+    .header-top { display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
+    .header h1 span { opacity: 0.7; font-weight: 400; }
+    .usage-bar-wrap { margin-top: 8px; }
+    .usage-label { font-size: 10px; opacity: 0.8; margin-bottom: 3px; }
+    .usage-bar { height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; }
+    .usage-fill { height: 100%; background: #a5b4fc; border-radius: 3px; transition: width 0.3s; }
+
+    /* ── Upgrade banner ── */
+    #upgradeBanner {
+      display: none;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #1a1a2e;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      padding: 7px 12px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+    #upgradeBanner:hover { opacity: 0.9; }
+
+    /* ── Tabs ── */
+    .tabs { display: flex; border-bottom: 1px solid #1e1b4b; }
+    .tab {
+      flex: 1; padding: 8px; text-align: center; font-size: 11px;
+      font-weight: 600; color: #6366f1; cursor: pointer; opacity: 0.5;
+      border-bottom: 2px solid transparent; transition: opacity 0.15s;
+    }
+    .tab.active { opacity: 1; border-bottom-color: #6366f1; }
+
+    /* ── Content panels ── */
+    .panel { display: none; padding: 12px 14px; }
+    .panel.active { display: block; }
+
+    /* ── Improve panel ── */
+    .textarea-wrap { position: relative; margin-top: 6px; }
+    textarea {
+      width: 100%; height: 90px; background: #1e1b4b; border: 1px solid #312e81;
+      border-radius: 6px; color: #e2e8f0; font-size: 12px; padding: 7px 9px;
+      padding-bottom: 20px;
+      resize: none; outline: none; font-family: inherit;
+    }
+    textarea:focus { border-color: #6366f1; }
+    .char-counter {
+      position: absolute; bottom: 6px; right: 8px;
+      font-size: 10px; color: #4f46e5; opacity: 0.7; pointer-events: none;
+    }
+    .char-counter.warn { color: #f87171; opacity: 1; }
+
+    .row { display: flex; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
+    label { font-size: 10px; color: #a5b4fc; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            display: block; margin-bottom: 4px; }
+
+    select {
+      background: #1e1b4b; border: 1px solid #312e81; color: #e2e8f0;
+      border-radius: 5px; padding: 4px 7px; font-size: 12px; outline: none;
+      cursor: pointer; flex: 1;
+    }
+
+    .btn-primary {
+      width: 100%; padding: 9px; margin-top: 8px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff; border: none; border-radius: 7px;
+      font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .result-box {
+      background: #1e1b4b; border: 1px solid #312e81; border-radius: 6px;
+      padding: 8px; font-size: 12px; line-height: 1.5; min-height: 50px;
+      white-space: pre-wrap; word-break: break-word; margin-top: 8px;
+      display: none;
+    }
+    .result-box.show { display: block; }
+
+    .result-actions { display: none; gap: 6px; margin-top: 5px; }
+    .result-actions.show { display: flex; }
+    .copy-btn {
+      padding: 5px 10px; background: #312e81; color: #a5b4fc;
+      border: none; border-radius: 5px; font-size: 11px; cursor: pointer;
+      flex: 1;
+    }
+    .copy-btn:hover { background: #4f46e5; color: #fff; }
+    .use-btn {
+      padding: 5px 10px; background: #1e3a8a; color: #93c5fd;
+      border: none; border-radius: 5px; font-size: 11px; cursor: pointer;
+      flex: 1;
+    }
+    .use-btn:hover { background: #1d4ed8; color: #fff; }
+
+    .error { color: #f87171; font-size: 11px; margin-top: 5px; }
+
+    /* ── History panel ── */
+    .history-item {
+      background: #1e1b4b; border-radius: 6px; padding: 8px; margin-bottom: 6px;
+      cursor: pointer; transition: background 0.1s;
+    }
+    .history-item:hover { background: #232060; }
+    .history-meta { font-size: 10px; color: #6366f1; margin-bottom: 3px; }
+    .history-orig { font-size: 11px; color: #94a3b8; white-space: nowrap;
+                    overflow: hidden; text-overflow: ellipsis; }
+    .history-imp  { font-size: 11px; color: #e2e8f0; white-space: nowrap;
+                    overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+    .empty { text-align: center; color: #4f46e5; opacity: 0.5; padding: 20px 0; }
+
+    /* ── Settings panel ── */
+    .setting-row { margin-bottom: 12px; }
+    input[type=text] {
+      width: 100%; background: #1e1b4b; border: 1px solid #312e81;
+      color: #e2e8f0; border-radius: 5px; padding: 5px 8px; font-size: 12px;
+      outline: none; font-family: inherit;
+    }
+    input[type=text]:focus { border-color: #6366f1; }
+    .save-btn {
+      padding: 6px 12px; background: #312e81; color: #a5b4fc;
+      border: none; border-radius: 5px; font-size: 11px; cursor: pointer;
+      margin-top: 4px;
+    }
+    .save-btn:hover { background: #4f46e5; color: #fff; }
+    .pro-badge {
+      display: inline-block; background: #fbbf24; color: #1a1a2e;
+      font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px;
+    }
+    .upgrade-link {
+      display: block; margin-top: 8px; text-align: center;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #1a1a2e; font-weight: 700; font-size: 12px;
+      padding: 8px; border-radius: 7px; text-decoration: none;
+      cursor: pointer; border: none; width: 100%;
+    }
+    .upgrade-link:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <h1>✨ ProWrite <span>AI</span></h1>
+  </div>
+  <div class="usage-bar-wrap">
+    <div class="usage-label" id="usageLabel">Cargando uso…</div>
+    <div class="usage-bar"><div class="usage-fill" id="usageFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<div id="upgradeBanner">⚡ Límite alcanzado — Haz clic para conseguir Pro ilimitado</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="improve">✨ Mejorar</div>
+  <div class="tab" data-tab="history">🕘 Historial</div>
+  <div class="tab" data-tab="settings">⚙️ Config</div>
+</div>
+
+<!-- Mejorar -->
+<div class="panel active" id="panel-improve">
+  <div class="row">
+    <div style="flex:1">
+      <label>Tono</label>
+      <select id="toneSelect">
+        <option value="Formal">Formal</option>
+        <option value="Direct">Directo</option>
+        <option value="Persuasive">Persuasivo</option>
+        <option value="Friendly">Amigable</option>
+      </select>
+    </div>
+    <div style="flex:1">
+      <label>Idioma</label>
+      <select id="langSelect">
+        <option value="es">🇪🇸 Español</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="pt">🇵🇹 Português</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="nl">🇳🇱 Dutch</option>
+        <option value="pl">🇵🇱 Polski</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="ar">🇸🇦 عربي</option>
+      </select>
+    </div>
+  </div>
+  <div class="textarea-wrap">
+    <textarea id="inputText" placeholder="Escribe o pega el texto a mejorar…" maxlength="5000"></textarea>
+    <span class="char-counter" id="charCounter">0 / 5000</span>
+  </div>
+  <button class="btn-primary" id="improveBtn">✨ Mejorar texto</button>
+  <div class="error" id="errorMsg"></div>
+  <div class="result-box" id="resultBox"></div>
+  <div class="result-actions" id="resultActions">
+    <button class="copy-btn" id="copyBtn">📋 Copiar</button>
+    <button class="use-btn"  id="useBtn">↙ Usar como entrada</button>
+  </div>
+</div>
+
+<!-- Historial -->
+<div class="panel" id="panel-history">
+  <div id="historyList"><div class="empty">Sin historial aún</div></div>
+</div>
+
+<!-- Configuración -->
+<div class="panel" id="panel-settings">
+  <div class="setting-row">
+    <label>User ID <span id="proTag"></span></label>
+    <input type="text" id="userIdInput" placeholder="Se genera automáticamente">
+    <button class="save-btn" id="saveUserId">Guardar</button>
+  </div>
+  <div class="setting-row">
+    <label>Estado de cuenta</label>
+    <div id="accountStatus" style="font-size:12px;color:#a5b4fc;">Cargando…</div>
+    <button class="upgrade-link" id="upgradeBtn" style="display:none">
+      ⚡ Obtener Pro — Usos ilimitados
+    </button>
+  </div>
+  <div class="setting-row">
+    <label>Limpiar historial</label>
+    <button class="save-btn" id="clearHistory">🗑 Borrar historial</button>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

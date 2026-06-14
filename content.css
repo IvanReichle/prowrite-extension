@@ -1,0 +1,106 @@
+/* ProWrite AI — estilos del botón flotante y panel */
+
+#prowrite-btn {
+  position: absolute;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.5);
+  user-select: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+#prowrite-btn:hover { transform: scale(1.05); }
+.pw-icon { font-size: 13px; }
+
+#prowrite-settings {
+  position: absolute;
+  z-index: 2147483646;
+  background: #1e1b4b;
+  border: 1px solid #4f46e5;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  min-width: 260px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.pw-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.pw-label {
+  color: #a5b4fc;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: 44px;
+  flex-shrink: 0;
+}
+
+.pw-chip {
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid #4f46e5;
+  background: transparent;
+  color: #c7d2fe;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.pw-chip:hover { background: #312e81; }
+.pw-chip-active { background: #4f46e5 !important; color: #fff; border-color: #6366f1; }
+.pw-chip-sm { padding: 2px 5px; font-size: 13px; }
+
+.pw-improve-btn {
+  margin-top: 4px;
+  padding: 7px 12px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.15s;
+}
+.pw-improve-btn:hover { opacity: 0.9; }
+
+/* Toast */
+.pw-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: #312e81;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+}
+.pw-toast-show { opacity: 1; transform: translateY(0); }
+.pw-toast-success { background: #065f46; }
+.pw-toast-error   { background: #7f1d1d; }

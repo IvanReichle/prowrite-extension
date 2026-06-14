@@ -1,0 +1,14 @@
+# Chrome Extension — do not commit
+*.pem
+*.crx
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
