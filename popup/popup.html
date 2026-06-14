@@ -147,6 +147,20 @@
       display: inline-block; background: #fbbf24; color: #1a1a2e;
       font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px;
     }
+    #headerProBtn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #1a1a2e;
+      border: none;
+      border-radius: 12px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+    #headerProBtn:hover { opacity: 0.85; }
+
     .upgrade-link {
       display: block; margin-top: 8px; text-align: center;
       background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -162,6 +176,7 @@
 <div class="header">
   <div class="header-top">
     <h1>✨ ProWrite <span>AI</span></h1>
+    <button id="headerProBtn" title="Hazte Pro — usos ilimitados">⚡ Pro</button>
   </div>
   <div class="usage-bar-wrap">
     <div class="usage-label" id="usageLabel">Cargando uso…</div>

@@ -162,14 +162,13 @@ document.getElementById("useBtn").addEventListener("click", () => {
 
 // ── Upgrade banner / botón ─────────────────────────────────────────────────
 
-const STRIPE_URL = "https://prowrite-backend-ds5o.onrender.com/upgrade";
+const STRIPE_URL = "https://buy.stripe.com/5kQ00lgN54ENfxidNQa3u00";
 
-document.getElementById("upgradeBanner").addEventListener("click", () => {
-  chrome.tabs.create({ url: STRIPE_URL });
-});
-document.getElementById("upgradeBtn").addEventListener("click", () => {
-  chrome.tabs.create({ url: STRIPE_URL });
-});
+function openStripe() { chrome.tabs.create({ url: STRIPE_URL }); }
+
+document.getElementById("headerProBtn").addEventListener("click", openStripe);
+document.getElementById("upgradeBanner").addEventListener("click", openStripe);
+document.getElementById("upgradeBtn").addEventListener("click", openStripe);
 
 // ── Historial ──────────────────────────────────────────────────────────────
 
