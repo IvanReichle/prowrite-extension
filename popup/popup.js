@@ -502,6 +502,13 @@ document.getElementById("useBtn").addEventListener("click", () => {
 
 function openStripe() { chrome.tabs.create({ url: STRIPE_URL }); }
 document.getElementById("headerProBtn").addEventListener("click", openStripe);
+
+document.getElementById("sidePanelBtn")?.addEventListener("click", () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+    if (tab?.windowId) chrome.sidePanel.open({ windowId: tab.windowId });
+    window.close();
+  });
+});
 document.getElementById("upgradeBanner").addEventListener("click", openStripe);
 document.getElementById("upgradeBtn").addEventListener("click", openStripe);
 
