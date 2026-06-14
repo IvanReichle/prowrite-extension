@@ -43,6 +43,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 // Context menu click → improve selected text
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId !== "prowrite-improve") return;
+  if (!tab?.id) return; // chrome:// pages, PDFs, etc. have no content script
   const text = info.selectionText?.trim();
   if (!text) return;
 
@@ -52,7 +53,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     const stored = await chrome.storage.sync.get(["userId", "tone", "language"]);
     const uid      = stored.userId   || generateId();
     const tone     = stored.tone     || "Formal";
-    const language = stored.language || "es";
+    const language = stored.language || "en";
 
     if (!stored.userId) chrome.storage.sync.set({ userId: uid });
 
@@ -93,16 +94,26 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 async function handleImprove({ userId, text, tone, language }) {
-  const res = await fetch(`${API_BASE}/improve`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: userId, text, tone, language }),
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.detail || `Error ${res.status}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+  try {
+    const res = await fetch(`${API_BASE}/improve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: userId, text, tone, language }),
+      signal: controller.signal,
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.detail || `Error ${res.status}`);
+    }
+    return res.json();
+  } catch (err) {
+    if (err.name === "AbortError") throw new Error("Request timed out. Please try again.");
+    throw err;
+  } finally {
+    clearTimeout(timeout);
   }
-  return res.json();
 }
 
 function generateId() {

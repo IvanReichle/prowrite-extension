@@ -77,6 +77,7 @@ const I18N = {
     accountFree: r => `Plan Free — ${r} améliorations restantes`,
     accountPro: "Plan PRO actif",
     tones: { Formal: "Formel", Direct: "Direct", Persuasive: "Persuasif", Friendly: "Amical" },
+    labelShortcut: "Raccourci clavier", shortcutDesc: "Améliore le champ de texte actif",
     errTooLong: m => `⚠️ Texte trop long (max ${m} caractères)`,
     errConnect: "❌ Impossible de se connecter à ProWrite.",
     errUnexpected: "Réponse inattendue du serveur.",
@@ -101,6 +102,7 @@ const I18N = {
     accountFree: r => `Free-Plan — noch ${r} Verbesserungen`,
     accountPro: "PRO-Plan aktiv",
     tones: { Formal: "Formell", Direct: "Direkt", Persuasive: "Überzeugend", Friendly: "Freundlich" },
+    labelShortcut: "Tastenkürzel", shortcutDesc: "Verbessert das aktive Textfeld",
     errTooLong: m => `⚠️ Text zu lang (max. ${m} Zeichen)`,
     errConnect: "❌ Verbindung zu ProWrite fehlgeschlagen.",
     errUnexpected: "Unerwartete Serverantwort.",
@@ -125,6 +127,7 @@ const I18N = {
     accountFree: r => `Plano Free — ${r} melhorias restantes`,
     accountPro: "Plano PRO ativo",
     tones: { Formal: "Formal", Direct: "Direto", Persuasive: "Persuasivo", Friendly: "Amigável" },
+    labelShortcut: "Atalho de teclado", shortcutDesc: "Melhora o campo de texto ativo",
     errTooLong: m => `⚠️ Texto muito longo (máx. ${m} caracteres)`,
     errConnect: "❌ Não foi possível conectar ao ProWrite.",
     errUnexpected: "Resposta inesperada do servidor.",
@@ -149,6 +152,7 @@ const I18N = {
     accountFree: r => `Piano Free — ${r} miglioramenti rimasti`,
     accountPro: "Piano PRO attivo",
     tones: { Formal: "Formale", Direct: "Diretto", Persuasive: "Persuasivo", Friendly: "Amichevole" },
+    labelShortcut: "Scorciatoia da tastiera", shortcutDesc: "Migliora il campo di testo attivo",
     errTooLong: m => `⚠️ Testo troppo lungo (max ${m} caratteri)`,
     errConnect: "❌ Impossibile connettersi a ProWrite.",
     errUnexpected: "Risposta inaspettata dal server.",
@@ -173,6 +177,7 @@ const I18N = {
     accountFree: r => `Gratis plan — ${r} verbeteringen over`,
     accountPro: "PRO plan actief",
     tones: { Formal: "Formeel", Direct: "Direct", Persuasive: "Overtuigend", Friendly: "Vriendelijk" },
+    labelShortcut: "Sneltoets", shortcutDesc: "Verbetert het actieve tekstveld",
     errTooLong: m => `⚠️ Tekst te lang (max ${m} tekens)`,
     errConnect: "❌ Kan geen verbinding maken met ProWrite.",
     errUnexpected: "Onverwacht serverantwoord.",
@@ -197,6 +202,7 @@ const I18N = {
     accountFree: r => `Plan Free — ${r} ulepszeń pozostało`,
     accountPro: "Plan PRO aktywny",
     tones: { Formal: "Formalny", Direct: "Bezpośredni", Persuasive: "Przekonujący", Friendly: "Przyjazny" },
+    labelShortcut: "Skrót klawiszowy", shortcutDesc: "Poprawia aktywne pole tekstowe",
     errTooLong: m => `⚠️ Tekst za długi (maks. ${m} znaków)`,
     errConnect: "❌ Nie można połączyć z ProWrite.",
     errUnexpected: "Nieoczekiwana odpowiedź serwera.",
@@ -221,6 +227,7 @@ const I18N = {
     accountFree: r => `Бесплатный план — ${r} улучшений осталось`,
     accountPro: "PRO план активен",
     tones: { Formal: "Формальный", Direct: "Прямой", Persuasive: "Убедительный", Friendly: "Дружелюбный" },
+    labelShortcut: "Горячая клавиша", shortcutDesc: "Улучшает активное текстовое поле",
     errTooLong: m => `⚠️ Текст слишком длинный (макс. ${m} символов)`,
     errConnect: "❌ Не удалось подключиться к ProWrite.",
     errUnexpected: "Неожиданный ответ сервера.",
@@ -245,6 +252,7 @@ const I18N = {
     accountFree: r => `無料プラン — あと${r}回`,
     accountPro: "PROプラン有効",
     tones: { Formal: "フォーマル", Direct: "ダイレクト", Persuasive: "説得力", Friendly: "フレンドリー" },
+    labelShortcut: "キーボードショートカット", shortcutDesc: "アクティブなテキストフィールドを改善",
     errTooLong: m => `⚠️ テキストが長すぎます（最大${m}文字）`,
     errConnect: "❌ ProWriteに接続できません。",
     errUnexpected: "予期しないサーバー応答。",
@@ -269,6 +277,7 @@ const I18N = {
     accountFree: r => `免费计划 — 今天剩余${r}次`,
     accountPro: "PRO计划有效",
     tones: { Formal: "正式", Direct: "直接", Persuasive: "有说服力", Friendly: "友好" },
+    labelShortcut: "键盘快捷键", shortcutDesc: "改进活动文本字段",
     errTooLong: m => `⚠️ 文本太长（最多${m}个字符）`,
     errConnect: "❌ 无法连接到ProWrite。",
     errUnexpected: "服务器响应异常。",
@@ -293,6 +302,7 @@ const I18N = {
     accountFree: r => `الخطة المجانية — ${r} تحسينات متبقية`,
     accountPro: "خطة PRO نشطة",
     tones: { Formal: "رسمي", Direct: "مباشر", Persuasive: "مقنع", Friendly: "ودي" },
+    labelShortcut: "اختصار لوحة المفاتيح", shortcutDesc: "تحسين حقل النص النشط",
     errTooLong: m => `⚠️ النص طويل جداً (الحد الأقصى ${m} حرف)`,
     errConnect: "❌ تعذر الاتصال بـ ProWrite.",
     errUnexpected: "استجابة غير متوقعة من الخادم.",
@@ -340,13 +350,13 @@ function applyI18n() {
 
 // ── Tabs ───────────────────────────────────────────────────────────────────
 
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-    tab.classList.add("active");
-    document.getElementById(`panel-${tab.dataset.tab}`).classList.add("active");
-    if (tab.dataset.tab === "history") renderHistory();
+document.querySelectorAll(".tab").forEach(tabEl => {
+  tabEl.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(el => el.classList.remove("active"));
+    tabEl.classList.add("active");
+    document.getElementById(`panel-${tabEl.dataset.tab}`).classList.add("active");
+    if (tabEl.dataset.tab === "history") renderHistory();
   });
 });
 
