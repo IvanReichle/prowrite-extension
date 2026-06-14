@@ -196,7 +196,7 @@
 <div class="panel active" id="panel-improve">
   <div class="row">
     <div style="flex:1">
-      <label>Tono</label>
+      <label id="labelTone">Tono</label>
       <select id="toneSelect">
         <option value="Formal">Formal</option>
         <option value="Direct">Directo</option>
@@ -205,7 +205,7 @@
       </select>
     </div>
     <div style="flex:1">
-      <label>Idioma</label>
+      <label id="labelLang">Idioma</label>
       <select id="langSelect">
         <option value="es">🇪🇸 Español</option>
         <option value="en">🇬🇧 English</option>
@@ -243,19 +243,19 @@
 <!-- Configuración -->
 <div class="panel" id="panel-settings">
   <div class="setting-row">
-    <label>User ID <span id="proTag"></span></label>
+    <label id="labelUserId">User ID <span id="proTag"></span></label>
     <input type="text" id="userIdInput" placeholder="Se genera automáticamente">
     <button class="save-btn" id="saveUserId">Guardar</button>
   </div>
   <div class="setting-row">
-    <label>Estado de cuenta</label>
+    <label id="labelAccount">Estado de cuenta</label>
     <div id="accountStatus" style="font-size:12px;color:#a5b4fc;">Cargando…</div>
     <button class="upgrade-link" id="upgradeBtn" style="display:none">
       ⚡ Obtener Pro — Usos ilimitados
     </button>
   </div>
   <div class="setting-row">
-    <label>Limpiar historial</label>
+    <label id="labelClearHistory">Limpiar historial</label>
     <button class="save-btn" id="clearHistory">🗑 Borrar historial</button>
   </div>
 </div>
