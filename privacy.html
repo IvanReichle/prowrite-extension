@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — ProWrite AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f0e2a;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 0 16px 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      margin: 0 -16px;
+      padding: 36px 32px 28px;
+      margin-bottom: 48px;
+    }
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    header h1 span { opacity: 0.7; font-weight: 400; }
+
+    header p {
+      margin-top: 6px;
+      font-size: 14px;
+      opacity: 0.75;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .last-updated {
+      font-size: 13px;
+      color: #6366f1;
+      margin-bottom: 40px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1e1b4b;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #a5b4fc;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    p { margin-bottom: 14px; color: #cbd5e1; }
+
+    ul {
+      margin: 8px 0 16px 20px;
+      color: #cbd5e1;
+    }
+
+    ul li { margin-bottom: 8px; }
+
+    a { color: #818cf8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .highlight-box {
+      background: #1e1b4b;
+      border: 1px solid #312e81;
+      border-left: 4px solid #6366f1;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #c7d2fe;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #065f46;
+      color: #6ee7b7;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-left: 6px;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #1e1b4b;
+      text-align: center;
+      font-size: 13px;
+      color: #4f46e5;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>✨ ProWrite <span>AI</span></h1>
+  <p>Privacy Policy</p>
+</header>
+
+<main>
+  <p class="last-updated">Last updated: June 14, 2026</p>
+
+  <div class="highlight-box">
+    <strong>Short version:</strong> ProWrite AI does not collect personal information. Your text is sent to our API only to improve it and is never stored or sold. A random anonymous ID is generated locally to track your daily usage.
+  </div>
+
+  <h2>1. Who we are</h2>
+  <p>
+    ProWrite AI is a Chrome extension developed by Ivan Reichle. It helps you improve any text on the web using artificial intelligence. You can reach us at
+    <a href="mailto:tickleleague@gmail.com">tickleleague@gmail.com</a>.
+  </p>
+
+  <h2>2. What data we collect</h2>
+
+  <p><strong>Anonymous User ID</strong></p>
+  <p>
+    When you first use the extension, a random UUID is generated locally in your browser and stored in Chrome's sync storage. This ID is not linked to your identity in any way — it exists only to track your daily usage quota.
+  </p>
+
+  <p><strong>Text you submit</strong></p>
+  <p>
+    When you click "Improve", the text you submit is sent to our backend API (<code>prowrite-backend-ds5o.onrender.com</code>) to be processed by Google's Gemini AI model. <strong>We do not store this text</strong> after returning the improved result.
+  </p>
+
+  <p><strong>Usage count</strong></p>
+  <p>
+    We store a daily usage counter associated with your anonymous ID in our database. This resets every 24 hours and is used solely to enforce the free plan limit (10 improvements per day).
+  </p>
+
+  <p><strong>Extension preferences</strong></p>
+  <p>
+    Your tone preference, output language, and improvement history (last 20 entries) are stored locally in Chrome storage on your device. They never leave your browser except to sync across your own Chrome devices via Chrome Sync.
+  </p>
+
+  <h2>3. What we do NOT collect</h2>
+  <ul>
+    <li>Your name, email address, or any personally identifiable information</li>
+    <li>Your browsing history or the websites you visit</li>
+    <li>The text you type — only the text you explicitly submit for improvement</li>
+    <li>Cookies, tracking pixels, or analytics identifiers</li>
+  </ul>
+
+  <h2>4. Third-party services</h2>
+
+  <p><strong>Google Gemini AI</strong></p>
+  <p>
+    Text submitted for improvement is processed by Google's Gemini AI API. Google's use of this data is governed by their
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
+    We use the API with data logging disabled where available.
+  </p>
+
+  <p><strong>Stripe <span class="badge">Pro users only</span></strong></p>
+  <p>
+    If you subscribe to ProWrite AI Pro, payment is processed by Stripe. We never see or store your payment card details. Stripe's privacy practices are governed by their
+    <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
+  </p>
+
+  <p><strong>Render</strong></p>
+  <p>
+    Our backend API is hosted on Render (<a href="https://render.com" target="_blank" rel="noopener">render.com</a>). Standard server request logs (IP address, timestamp, endpoint) may be retained by Render for up to 7 days for security purposes. We do not access or use these logs.
+  </p>
+
+  <h2>5. Data retention</h2>
+  <ul>
+    <li><strong>Anonymous usage counters</strong>: reset daily, automatically deleted after 30 days of inactivity.</li>
+    <li><strong>Pro subscription status</strong>: retained while your subscription is active; deleted within 30 days of cancellation.</li>
+    <li><strong>Local extension data</strong>: stored on your device until you uninstall the extension or manually clear it from the Settings tab.</li>
+  </ul>
+
+  <h2>6. Your rights</h2>
+  <p>
+    Since we do not collect personal data, there is generally nothing to access, correct, or delete. If you believe any data associated with your anonymous ID should be removed from our database, contact us at
+    <a href="mailto:tickleleague@gmail.com">tickleleague@gmail.com</a> with your User ID (visible in the Settings tab of the extension) and we will delete it within 7 days.
+  </p>
+
+  <h2>7. Children's privacy</h2>
+  <p>
+    ProWrite AI is not directed at children under 13. We do not knowingly collect any information from children.
+  </p>
+
+  <h2>8. Changes to this policy</h2>
+  <p>
+    If we make significant changes to this policy, we will update the "Last updated" date at the top of this page. Continued use of the extension after changes constitutes acceptance of the updated policy.
+  </p>
+
+  <h2>9. Contact</h2>
+  <p>
+    Questions or concerns? Email us at
+    <a href="mailto:tickleleague@gmail.com">tickleleague@gmail.com</a>.
+    We typically respond within 48 hours.
+  </p>
+</main>
+
+<footer>
+  © 2026 ProWrite AI · Ivan Reichle · <a href="mailto:tickleleague@gmail.com">tickleleague@gmail.com</a>
+</footer>
+
+</body>
+</html>
