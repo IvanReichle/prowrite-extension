@@ -315,6 +315,19 @@ chrome.runtime.onMessage.addListener(msg => {
   if (msg.type === "CONTEXT_MENU_ERROR") {
     showContextPanel({ error: msg.error });
   }
+
+  if (msg.type === "KEYBOARD_IMPROVE") {
+    if (activeField && isTextField(activeField)) {
+      const text = getFieldText(activeField);
+      if (text.trim()) {
+        doImprove();
+      } else {
+        showToast("⚠️ El campo de texto está vacío", "error");
+      }
+    } else {
+      showToast("⌨️ Haz clic en un campo de texto primero", "error");
+    }
+  }
 });
 
 function showContextPanel({ loading = false, improved = null, error = null, remaining = null, is_pro = false } = {}) {

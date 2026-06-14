@@ -68,6 +68,13 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
+// Keyboard shortcut → trigger improvement on active field
+chrome.commands.onCommand.addListener((command, tab) => {
+  if (command === "prowrite-improve" && tab?.id) {
+    chrome.tabs.sendMessage(tab.id, { type: "KEYBOARD_IMPROVE" });
+  }
+});
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === "IMPROVE_TEXT") {
     handleImprove(msg.payload).then(sendResponse).catch(err => {

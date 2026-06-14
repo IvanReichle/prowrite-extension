@@ -27,6 +27,7 @@ const I18N = {
     accountFree: r => `Plan Free — ${r} mejoras restantes hoy`,
     accountPro: "Plan PRO activo",
     tones: { Formal: "Formal", Direct: "Directo", Persuasive: "Persuasivo", Friendly: "Amigable" },
+    labelShortcut: "Atajo de teclado", shortcutDesc: "Mejora el campo de texto activo",
     errTooLong: m => `⚠️ Texto demasiado largo (máx. ${m} caracteres)`,
     errConnect: "❌ No se pudo conectar con ProWrite. Recarga la extensión.",
     errUnexpected: "Respuesta inesperada del servidor. Inténtalo de nuevo.",
@@ -51,6 +52,7 @@ const I18N = {
     accountFree: r => `Free plan — ${r} improvements left today`,
     accountPro: "PRO plan active",
     tones: { Formal: "Formal", Direct: "Direct", Persuasive: "Persuasive", Friendly: "Friendly" },
+    labelShortcut: "Keyboard shortcut", shortcutDesc: "Improves the active text field",
     errTooLong: m => `⚠️ Text too long (max ${m} characters)`,
     errConnect: "❌ Could not connect to ProWrite. Reload the extension.",
     errUnexpected: "Unexpected server response. Please try again.",
@@ -323,6 +325,8 @@ function applyI18n() {
   document.getElementById("upgradeBtn").textContent        = t("btnUpgrade");
   document.getElementById("upgradeBanner").textContent     = t("upgradeBanner");
   document.getElementById("headerProBtn").textContent      = t("headerPro");
+  document.getElementById("labelShortcut").textContent     = t("labelShortcut");
+  document.getElementById("shortcutDesc").textContent      = t("shortcutDesc");
 
   const tones = t("tones");
   Object.entries(tones).forEach(([val, label]) => {
