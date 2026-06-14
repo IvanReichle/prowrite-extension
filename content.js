@@ -275,6 +275,140 @@ function setLoading(on) {
   btn.style.pointerEvents = on ? "none" : "auto";
 }
 
+// ── Helpers ───────────────────────────────────────────────────────────────
+
+function escHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// ── Menú contextual ───────────────────────────────────────────────────────
+
+let contextPanel    = null;
+let savedField      = null;
+let savedSelStart   = null;
+let savedSelEnd     = null;
+let savedRange      = null;
+
+chrome.runtime.onMessage.addListener(msg => {
+  if (msg.type === "CONTEXT_MENU_LOADING") {
+    // Guardar selección antes de que se pierda
+    savedField = document.activeElement;
+    if (savedField && (savedField.tagName === "TEXTAREA" || savedField.tagName === "INPUT")) {
+      savedSelStart = savedField.selectionStart;
+      savedSelEnd   = savedField.selectionEnd;
+      savedRange    = null;
+    } else if (savedField && savedField.isContentEditable) {
+      const sel = window.getSelection();
+      savedRange    = sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+      savedSelStart = null;
+      savedSelEnd   = null;
+    } else {
+      savedField = savedSelStart = savedSelEnd = savedRange = null;
+    }
+    showContextPanel({ loading: true });
+  }
+
+  if (msg.type === "CONTEXT_MENU_RESULT") {
+    showContextPanel({ improved: msg.improved, remaining: msg.remaining, is_pro: msg.is_pro });
+  }
+
+  if (msg.type === "CONTEXT_MENU_ERROR") {
+    showContextPanel({ error: msg.error });
+  }
+});
+
+function showContextPanel({ loading = false, improved = null, error = null, remaining = null, is_pro = false } = {}) {
+  if (contextPanel) { contextPanel.remove(); contextPanel = null; }
+
+  const panel = document.createElement("div");
+  panel.id = "prowrite-context-panel";
+
+  let headerExtra = "";
+  if (!loading && !error && remaining !== null) {
+    const remText = is_pro ? "Pro ∞" : remaining === 0 ? "⚠ Límite" : `${remaining} restantes`;
+    headerExtra = `<span class="pwcp-rem">${escHtml(remText)}</span>`;
+  }
+
+  const header = `
+    <div class="pwcp-header">
+      <span class="pwcp-title">✨ ProWrite AI</span>
+      ${headerExtra}
+      <button class="pwcp-close" aria-label="Cerrar">✕</button>
+    </div>`;
+
+  if (loading) {
+    panel.innerHTML = header + `<div class="pwcp-loading"><span class="pwcp-spinner">⏳</span> Mejorando texto…</div>`;
+  } else if (error) {
+    panel.innerHTML = header + `<div class="pwcp-error">❌ ${escHtml(error)}</div>`;
+  } else {
+    panel.innerHTML = header + `
+      <div class="pwcp-result">${escHtml(improved)}</div>
+      <div class="pwcp-actions">
+        <button class="pwcp-btn pwcp-copy">📋 Copiar</button>
+        <button class="pwcp-btn pwcp-insert">↙ Insertar</button>
+      </div>`;
+  }
+
+  document.body.appendChild(panel);
+  contextPanel = panel;
+
+  panel.querySelector(".pwcp-close").addEventListener("click", () => {
+    panel.remove();
+    contextPanel = null;
+  });
+
+  if (!loading && !error && improved) {
+    panel.querySelector(".pwcp-copy").addEventListener("click", () => {
+      navigator.clipboard.writeText(improved).then(() => {
+        const b = panel.querySelector(".pwcp-copy");
+        b.textContent = "✅ Copiado";
+        setTimeout(() => { b.textContent = "📋 Copiar"; }, 1500);
+      });
+    });
+
+    panel.querySelector(".pwcp-insert").addEventListener("click", () => {
+      const inserted = insertImproved(improved);
+      if (inserted) {
+        showToast("✅ Texto insertado", "success");
+      } else {
+        navigator.clipboard.writeText(improved).then(() => {
+          showToast("📋 Copiado al portapapeles", "success");
+        });
+      }
+      panel.remove();
+      contextPanel = null;
+    });
+  }
+}
+
+function insertImproved(text) {
+  if (savedField && (savedField.tagName === "TEXTAREA" || savedField.tagName === "INPUT")
+      && savedSelStart !== null) {
+    const val    = savedField.value;
+    const newVal = val.substring(0, savedSelStart) + text + val.substring(savedSelEnd);
+    setFieldText(savedField, newVal);
+    try {
+      savedField.focus();
+      savedField.selectionStart = savedField.selectionEnd = savedSelStart + text.length;
+    } catch (_) { /* campo ya no accesible */ }
+    return true;
+  }
+  if (savedField && savedField.isContentEditable && savedRange) {
+    try {
+      savedField.focus();
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(savedRange);
+      savedRange.deleteContents();
+      savedRange.insertNode(document.createTextNode(text));
+      sel.collapseToEnd();
+      savedField.dispatchEvent(new Event("input", { bubbles: true }));
+      return true;
+    } catch (_) { /* DOM cambió */ }
+  }
+  return false;
+}
+
 // ── Detectar foco en campos de texto ──────────────────────────────────────
 
 function isTextField(el) {

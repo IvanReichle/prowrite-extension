@@ -331,6 +331,7 @@ function applyI18n() {
   });
 
   document.body.dir = uiLang === "ar" ? "rtl" : "ltr";
+  document.documentElement.lang = uiLang;
 }
 
 // ── Tabs ───────────────────────────────────────────────────────────────────
@@ -404,7 +405,7 @@ function updateUsageBar({ remaining, is_pro }) {
     label.textContent    = t("usagePro");
     fill.style.width     = "100%";
     fill.style.background = "#fbbf24";
-    accSt.innerHTML      = `Plan <span class="pro-badge">PRO</span> activo`;
+    accSt.innerHTML      = t("accountPro").replace("PRO", `<span class="pro-badge">PRO</span>`);
     proTag.innerHTML     = `<span class="pro-badge">PRO</span>`;
     banner.style.display = "none";
     upgBtn.style.display = "none";
@@ -568,7 +569,8 @@ function escHtml(s) {
 
 function formatDate(iso) {
   if (!iso) return "";
-  const d = new Date(iso);
-  return d.toLocaleDateString("es-ES", { day: "2-digit", month: "short" }) +
-         " " + d.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+  const d    = new Date(iso);
+  const loc  = uiLang === "zh" ? "zh-CN" : uiLang === "ar" ? "ar-SA" : uiLang;
+  return d.toLocaleDateString(loc, { day: "2-digit", month: "short" }) +
+         " " + d.toLocaleTimeString(loc, { hour: "2-digit", minute: "2-digit" });
 }

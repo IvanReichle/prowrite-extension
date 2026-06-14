@@ -104,3 +104,109 @@
 .pw-toast-show { opacity: 1; transform: translateY(0); }
 .pw-toast-success { background: #065f46; }
 .pw-toast-error   { background: #7f1d1d; }
+
+/* ── Panel resultado menú contextual ─────────────────────────────────── */
+
+#prowrite-context-panel {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483647;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  background: #1e1b4b;
+  border: 1px solid #4f46e5;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.2);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: #e2e8f0;
+  overflow: hidden;
+  animation: pwcp-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pwcp-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pwcp-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.pwcp-title { flex: 1; }
+
+.pwcp-rem {
+  font-size: 10px;
+  background: rgba(255,255,255,0.15);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.pwcp-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 2px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.1s;
+}
+.pwcp-close:hover { color: #fff; }
+
+.pwcp-loading {
+  padding: 18px 14px;
+  text-align: center;
+  color: #a5b4fc;
+  font-size: 13px;
+}
+
+.pwcp-error {
+  padding: 14px;
+  color: #f87171;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pwcp-result {
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #e2e8f0;
+  max-height: 180px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #13113a;
+  border-bottom: 1px solid #2d2b6b;
+}
+
+.pwcp-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+}
+
+.pwcp-btn {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 7px;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.pwcp-btn:hover { opacity: 0.82; }
+
+.pwcp-copy   { background: #312e81; color: #a5b4fc; }
+.pwcp-insert { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }

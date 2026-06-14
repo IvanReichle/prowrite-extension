@@ -3,7 +3,7 @@
   "name": "ProWrite AI",
   "version": "2.0.0",
   "description": "Mejora cualquier texto en la web con IA. Funciona en todos los campos de texto.",
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["storage", "activeTab", "scripting", "contextMenus"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
