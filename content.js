@@ -15,11 +15,17 @@ let currentTone = "Formal";
 let currentLang = "es";
 let isLoading   = false;
 
-// ── Cargar preferencias guardadas ──────────────────────────────────────────
+// ── Cargar preferencias guardadas y escuchar cambios en tiempo real ────────
 
 chrome.storage.sync.get(["tone", "language"], ({ tone, language }) => {
   if (tone)     currentTone = tone;
   if (language) currentLang = language;
+});
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== "sync") return;
+  if (changes.tone)     currentTone = changes.tone.newValue;
+  if (changes.language) currentLang = changes.language.newValue;
 });
 
 // ── userId: generado una vez y persistido en storage ──────────────────────
