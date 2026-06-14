@@ -9,7 +9,6 @@ const LANG_LABELS = {
 
 let btn         = null;
 let activeField = null;
-let lastRect    = null;
 let settingsBar = null;
 let currentTone = "Formal";
 let currentLang = "es";
@@ -81,7 +80,6 @@ function positionBtn(rect) {
   );
   btn.style.left = `${Math.max(scrollX + 4, left)}px`;
   btn.style.top  = `${rect.bottom + scrollY + 4}px`;
-  lastRect = rect;
 }
 
 // ── Barra de configuración (tono + idioma) ─────────────────────────────────
@@ -365,9 +363,21 @@ function showContextPanel({ loading = false, improved = null, error = null, rema
   document.body.appendChild(panel);
   contextPanel = panel;
 
+  // Cerrar al hacer clic fuera del panel
+  const outsideHandler = e => {
+    if (!panel.contains(e.target)) {
+      panel.remove();
+      contextPanel = null;
+      document.removeEventListener("mousedown", outsideHandler, true);
+    }
+  };
+  // Delay para no capturar el clic que abrió el panel
+  setTimeout(() => document.addEventListener("mousedown", outsideHandler, true), 100);
+
   panel.querySelector(".pwcp-close").addEventListener("click", () => {
     panel.remove();
     contextPanel = null;
+    document.removeEventListener("mousedown", outsideHandler, true);
   });
 
   if (!loading && !error && improved) {
@@ -381,15 +391,15 @@ function showContextPanel({ loading = false, improved = null, error = null, rema
 
     panel.querySelector(".pwcp-insert").addEventListener("click", () => {
       const inserted = insertImproved(improved);
+      panel.remove();
+      contextPanel = null;
       if (inserted) {
         showToast("✅ Texto insertado", "success");
       } else {
-        navigator.clipboard.writeText(improved).then(() => {
-          showToast("📋 Copiado al portapapeles", "success");
-        });
+        navigator.clipboard.writeText(improved)
+          .then(() => showToast("📋 Copiado al portapapeles", "success"))
+          .catch(() => showToast("❌ No se pudo insertar ni copiar", "error"));
       }
-      panel.remove();
-      contextPanel = null;
     });
   }
 }
